@@ -35,3 +35,31 @@ int main()
     return 0;
 }
 
+// second approach
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    set<int> set;
+    int n2 = n;
+    int i = 1;
+    vector<int> vec;
+    while(i<=sqrt(n)){
+        if(n%i == 0){
+            vec.push_back(i);
+        }
+        i++;
+    }
+    int vs = vec.size();
+    int maxel = vec[vs-1];
+    for(int i = 2; i< vs;i++){
+        int curr = vec[i];
+        vec.push_back(n/curr);
+    }
+    for(int num : vec){
+        cout<<num<<" ";
+    }
+    return 0;
+}
