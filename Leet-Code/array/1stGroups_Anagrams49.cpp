@@ -36,3 +36,27 @@ public:
 
 //🔸 unsigned long long → 64-bit unsigned integer
 //Range: 0 to 18,446,744,073,709,551,615 
+
+// 2nd approach on 28 February 2026
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> mp;
+        int n = strs.size(); 
+        for (int i = 0; i < n; i++) {
+            string a = strs[i]; 
+            sort(a.begin(), a.end());
+            mp[a].push_back(strs[i]); 
+        }
+        vector<vector<string>> ans;
+        for (auto& it : mp) {
+            vector<string> b = it.second; 
+            vector<string> temp;
+            for (string& s : b) {
+                temp.push_back(s); 
+            }
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};
