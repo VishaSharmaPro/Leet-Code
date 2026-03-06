@@ -42,3 +42,51 @@ public:
         return newh;
     }
 };
+
+
+// another solution
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        unordered_map<Node*,Node*> mp;
+        if(head == NULL) return NULL;
+        Node* curr = head->next;
+        Node* newh = new Node(head->val);
+        mp[head] = newh;
+        Node* temp = newh;
+        while(curr != NULL){
+            Node* newn = new Node(curr->val);
+            mp[curr] = newn;
+            temp->next = newn;
+            temp = newn;
+            curr = curr->next;
+            
+        }
+        Node* newcurr = newh;
+        curr = head;
+        while(newcurr != NULL){
+            if(curr->random != NULL){
+                newcurr->random = mp[curr->random];
+            }
+            newcurr = newcurr->next;
+            curr = curr->next;
+        }
+        return newh;
+    }
+};
