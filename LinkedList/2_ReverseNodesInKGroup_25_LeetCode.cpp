@@ -51,3 +51,53 @@ public:
         return newHead;
     }
 };
+
+// another solution 7 march 2026
+class Solution {
+public:
+    int countNodes(ListNode* head, int k) {
+        int count = 0;
+        while (head && count < k) {
+            head = head->next;
+            count++;
+        }
+        return count;
+    }
+    
+    ListNode* reverse(ListNode* head, int k) {
+        if (!head || k <= 1) return head;
+        
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        int count = 0;
+        
+        while (curr && count < k) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        
+        return prev;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (countNodes(head, k) < k) return head;
+        
+        
+        ListNode* remainingStart = head;
+        for (int i = 0; i < k; i++) {
+            remainingStart = remainingStart->next;
+        }
+        
+        
+        ListNode* newHead = reverse(head, k);
+        
+        
+        if (remainingStart) {
+            head->next = reverseKGroup(remainingStart, k);
+        }
+        
+        return newHead;
+    }
+};
