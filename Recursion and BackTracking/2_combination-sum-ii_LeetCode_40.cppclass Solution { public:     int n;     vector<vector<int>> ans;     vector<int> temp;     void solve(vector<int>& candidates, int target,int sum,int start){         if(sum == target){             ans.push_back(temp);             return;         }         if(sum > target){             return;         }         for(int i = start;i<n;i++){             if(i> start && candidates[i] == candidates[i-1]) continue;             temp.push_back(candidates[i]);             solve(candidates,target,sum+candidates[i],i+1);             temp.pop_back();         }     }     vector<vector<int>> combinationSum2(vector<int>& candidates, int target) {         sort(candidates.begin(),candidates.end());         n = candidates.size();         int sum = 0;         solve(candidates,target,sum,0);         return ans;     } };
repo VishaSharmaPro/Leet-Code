@@ -1,0 +1,29 @@
+// google amazon microsoft meta bloomberg zoho linkedin oracle tiktok adobe rakuten walmart goldman tesla
+class Solution {
+public:
+    int n;
+    vector<vector<int>> ans;
+    vector<int> temp;
+    void solve(vector<int>& candidates, int target,int sum,int start){
+        if(sum == target){
+            ans.push_back(temp);
+            return;
+        }
+        if(sum > target){
+            return;
+        }
+        for(int i = start;i<n;i++){
+            if(i> start && candidates[i] == candidates[i-1]) continue;
+            temp.push_back(candidates[i]);
+            solve(candidates,target,sum+candidates[i],i+1);
+            temp.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
+        n = candidates.size();
+        int sum = 0;
+        solve(candidates,target,sum,0);
+        return ans;
+    }
+};
