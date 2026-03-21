@@ -14,3 +14,21 @@ public:
         return solve(nums,0);
     }
 };
+
+// bottom up
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 1) return nums[0];
+        if(n == 2) return max(nums[0], nums[1]);
+        vector<int> t(n,0);
+        t[0] = nums[0];
+        t[1] = nums[1];
+        t[2] = nums[2] + nums[0];
+        for(int i = 3;i<n;i++){
+            t[i] = nums[i] + max(t[i-2],t[i-3]);
+        }
+        return max(t[n-1],t[n-2]);
+    }
+};
