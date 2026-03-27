@@ -1,4 +1,5 @@
 // google meta amazon microsoft apple doordash duolingo tiktok uber nutanix adobe phonepe weride
+// pura question khud se kiya within 25min ek word tak nhi dekha claude deepseek se
 class Solution {
 public:
     int ans = 0;
