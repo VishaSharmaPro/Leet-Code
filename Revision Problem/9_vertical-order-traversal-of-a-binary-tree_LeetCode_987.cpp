@@ -44,4 +44,13 @@ sort() on vector<pair<int,int>> by default:
 
 Rule 1: Pehle first ke according sort karo
 Rule 2: Agar first equal hai, toh second ke according sort karo
+
+Step 1: first (row) compare karo
+0 vs 2 → 0 chhota hai, toh (0,3) pehle aayega
+
+2 vs 2 → equal, toh second (value) compare karo
+
+Step 2: second (value) compare for equal first
+(2,2) aur (2,2) → dono second = 2, equal toh original order maintain (stable sort)
+
 */
