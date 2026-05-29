@@ -12,17 +12,18 @@
  */
 class Solution {
 public:
-    
     void solve(TreeNode* root){
         if(root == NULL) return;
-        solve(root->left);
-        solve(root->right);
+        
+        solve(root->left);                    // pehle left flatten karo
+        solve(root->right);                   // phir right flatten karo
+        
         if(root->left){
             TreeNode* temp = root->left;
-            while(temp->right) temp = temp->right;
-            temp->right=root->right;
-            root->right = root->left;
-            root->left = NULL;
+            while(temp->right) temp = temp->right;  // left ka tail dhundo
+            temp->right = root->right;        // right ko left ke tail se jodo
+            root->right = root->left;         // left ko right mein lao
+            root->left = NULL;                // left NULL karo
         }
     }
     void flatten(TreeNode* root) {
