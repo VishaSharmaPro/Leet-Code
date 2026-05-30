@@ -39,3 +39,38 @@ Erase	it = mp.erase(it); ✅	                   ||     mp.erase(it); ❌
 After erase	it points to next element	           ||     it is invalid (use-after-free)
 Else branch	it++	                               ||      it++
 */
+
+
+// Method 2
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        int n = hand.size();
+        if(n % groupSize != 0) return false;
+        map<int,int> mp;
+        for(int i = 0;i<n;i++){
+            mp[hand[i]]++;
+        }
+        
+        while(!mp.empty()){
+            int count = 0;
+            auto it = mp.begin();  // FIX: iterator use karo
+            int prev = it->first - 1;
+            while(count < groupSize && it != mp.end()){
+                int el = it->first;
+                if(el != prev+1) return false;
+                mp[el]--;
+                if(mp[el] == 0){
+                    int key = it->first;
+                    it++;
+                    mp.erase(key);
+                }
+                else it++;
+                count++;
+                prev = el;
+            }
+            if(count != groupSize) return false;
+        }
+        return true;
+    }
+};
