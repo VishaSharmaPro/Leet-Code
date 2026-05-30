@@ -28,3 +28,14 @@ public:
         return true;
     }
 };
+
+/*
+Error kyun aa raha hai?
+Heap-use-after-free - Tum mp.erase(it) kar rahe ho, lekin phir it++ use kar rahe ho. Erase ke baad it invalid ho jata hai!
+
+Difference between two codes:
+Line	Working code (sahi)	Error code (galat)
+Erase	it = mp.erase(it); ✅	                   ||     mp.erase(it); ❌
+After erase	it points to next element	           ||     it is invalid (use-after-free)
+Else branch	it++	                               ||      it++
+*/
