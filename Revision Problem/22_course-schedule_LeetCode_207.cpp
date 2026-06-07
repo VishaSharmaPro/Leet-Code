@@ -39,3 +39,35 @@ public:
         return true;
     }
 };
+
+// with topological sort by BFS
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> gr(numCourses);
+        vector<int> indegree(numCourses,0);
+
+        for(const auto & prq : prerequisites){
+            int course = prq[0];
+            int pre_course = prq[1];
+            gr[pre_course].push_back(course);
+            indegree[course]++;
+        }
+        queue<int> q;
+        for(int i = 0;i<numCourses;i++){
+            if(indegree[i] == 0) q.push(i);
+        }
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+            for(int & ne : gr[curr]){
+                indegree[ne]--;
+                if(indegree[ne] == 0) q.push(ne);
+            }
+        }
+        for(int i = 0;i<indegree.size();i++){
+            if(indegree[i] != 0) return false;
+        }
+        return true;
+    }
+};
