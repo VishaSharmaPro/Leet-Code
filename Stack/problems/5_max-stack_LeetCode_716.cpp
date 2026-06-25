@@ -91,3 +91,46 @@ public:
         return el;
     }
 };
+
+// method 2 by vector inside elemnt map in placce of set
+
+class MaxStack {
+public:
+    map<int,int> index;           
+    map<int, vector<int>> element;   
+    int i = 0;
+
+    void push(int x) {
+        index[i] = x;
+        element[x].push_back(i);     
+        i++;
+    }
+    
+    int pop() {
+        auto it = index.rbegin();
+        int id = it->first;
+        int el = it->second;
+        index.erase(id);
+        element[el].pop_back();                         
+        if(element[el].empty()) element.erase(el);     
+        return el;
+    }
+    
+    int top() {
+        return index.rbegin()->second;
+    }
+    
+    int peekMax() {
+        return element.rbegin()->first;
+    }
+    
+    int popMax() {
+        auto it = element.rbegin();
+        int el = it->first;
+        int id = it->second.back();  
+        element[el].pop_back();
+        if(element[el].empty()) element.erase(el);
+        index.erase(id);
+        return el;
+    }
+};
