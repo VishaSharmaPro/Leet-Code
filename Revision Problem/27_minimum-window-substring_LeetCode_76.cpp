@@ -83,4 +83,9 @@ public:
         return minlen == n+1 ? "" : s.substr(start, minlen);
     }
 };
-iski code force rating kya hai
+/*
+Aspect	                  Theoretical           	Practical (LeetCode/CF)
+unordered_map::find()	   O(n)                    worst-case	O(1) average
+Your Code Complexity	   O(n²)	                           O(n)
+Will it pass?	           Maybe not	                     ✅ Yes
+*/
