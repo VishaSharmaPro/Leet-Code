@@ -1,4 +1,5 @@
 // google amazon microsoft meta bloomberg lyft oracle linkedin goldman molco tiktok uber adobe airbnb zeta
+// method 1
 class Solution {
 public:
     unordered_map<char,int> need;
@@ -36,3 +37,50 @@ public:
         return s.substr(start, ans);  // int ki jagah string return karo
     }
 };
+
+
+// method 2
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int n = s.length();
+        int m = t.length();
+        if(m > n) return "";
+        
+        unordered_map<char,int> mp;
+        for(int i = 0; i < m; i++) {
+            mp[t[i]]++;
+        }
+        
+        int i = 0;
+        int j = 0;
+        int count = 0;
+        int minlen = n+1;
+        int start = 0;  
+        
+        while(j < n) {
+            if(mp.find(s[j]) != mp.end()) {
+                mp[s[j]]--;                    
+                if(mp[s[j]] >= 0){             
+                    count++;
+                }  
+            }
+            j++;
+            while(count == m) {
+                if(j - i < minlen) {
+                    minlen = j - i;
+                    start = i;
+                }
+                if(mp.find(s[i]) != mp.end()){  
+                    mp[s[i]]++;
+                    if(mp[s[i]] > 0) {         
+                        count--;
+                    }
+                }
+                i++;
+            }
+        }
+        return minlen == n+1 ? "" : s.substr(start, minlen);
+    }
+};
+iski code force rating kya hai
