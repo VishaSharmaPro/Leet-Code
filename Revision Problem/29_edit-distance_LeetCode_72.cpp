@@ -26,6 +26,19 @@ public:
 };
 
 // method 2
+/*
+continue isliye likha taaki else block execute na ho aur dp[i][j] overwrite na ho.
+Bina continue ke yeh hota:
+cppif(word1[i] == word2[j]){
+    dp[i][j] = dp[i+1][j+1];  // ✅ Sahi value set hui
+}
+else{
+    insert = ...; replace = ...; del = ...;
+}
+dp[i][j] = min({0, 0, 0});  // ❌ 0 se overwrite ho gaya!
+insert, replace, del sab 0 hain, toh min({0,0,0}) = 0 se overwrite ho jaata tha.
+continue se loop ka next iteration chala jaata hai — dp[i][j] = min(...) line skip ho jaati hai. ✅
+*/
 class Solution {
 public:
     int m;
@@ -49,6 +62,34 @@ public:
                     del = 1 + dp[i+1][j];
                 }
                 dp[i][j] = min({insert,replace,del});
+            }
+        }
+        return dp[0][0];
+    }
+};
+
+// method 3   without continue
+class Solution {
+public:
+    int m;
+    int n;
+    int minDistance(string word1, string word2) {
+        m = word1.length();
+        n = word2.length();
+        vector<vector<int>> dp = vector<vector<int>>(m+1,vector<int>(n+1,0));
+        for(int j = 0;j<=n;j++) dp[m][j] = n-j;
+        for(int i = 0;i<=m;i++) dp[i][n] = m-i;
+        for(int i = m-1;i>=0;i--){
+            for(int j =n-1;j>=0;j--){
+                if(word1[i] == word2[j]){
+                    dp[i][j] =  dp[i+1][j+1];
+                } 
+                else {
+                    int insert = 1 + dp[i][j+1];
+                    int replace = 1 + dp[i+1][j+1];
+                    int del = 1 + dp[i+1][j];
+                    dp[i][j] = min({insert, replace, del});  // ✅ Sirf else mein
+                }
             }
         }
         return dp[0][0];
