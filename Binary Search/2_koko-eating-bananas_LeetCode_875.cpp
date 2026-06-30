@@ -26,3 +26,34 @@ public:
         return s;
     }
 };
+ // method 2
+class Solution {
+public:
+    long long calachour(int k,vector<int>& piles){
+        long long ans = 0;
+        for(int i = 0;i<piles.size();i++){
+            if(piles[i]%k == 0) ans = ans + piles[i]/k;
+            else ans = ans + piles[i]/k + 1;
+        }
+        return ans;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int n = piles.size();
+        sort(piles.begin(),piles.end());
+        int e = piles[n-1];
+        int s =1;
+        int ans = piles[n-1];
+        while(s<=e){
+            int mid = s +(e-s)/2;
+            long long hourreq = calachour(mid,piles);
+            if(hourreq<=h){
+                ans = min(ans,mid);
+                e = mid-1;
+            }
+            else{
+                s =mid+1;
+            }
+        }
+        return ans;
+    }
+};
