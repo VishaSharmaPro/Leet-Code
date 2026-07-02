@@ -21,3 +21,36 @@ public:
         return solve(0,0,s);
     }
 };
+
+// on 2/7/26
+class Solution {
+public:
+    int n;
+    unordered_map<string,int> dict;
+    
+    
+    vector<vector<int>> dp;
+    bool solve(int i,int j,string &s){
+        if(i == n) return true;
+        if(j>=n) return false;
+        if(dp[i][j] != -1) return dp[i][j];
+        
+        string temp = s.substr(i,j-i+1);
+        bool take = false;
+        if(dict.find(temp) != dict.end()){
+            take = solve(j+1,j+1,s);
+        }
+        bool skip = false;
+        skip = solve(i,j+1,s);
+        return dp[i][j] = take || skip;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        n = s.length();
+        for(auto it : wordDict){
+            dict[it]++;
+        }
+        dp = vector<vector<int>>(n,vector<int>(n,-1));
+        return solve(0,0,s);
+        
+    }
+};
